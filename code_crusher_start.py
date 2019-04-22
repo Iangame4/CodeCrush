@@ -13,21 +13,21 @@ import traceback
 import os
 
 # Where is the 'hole' for the game board in the background image?
-HOFF = 200
-VOFF = 100
+HOFF = 200    # Horizonal position of the hole
+VOFF = 100    # Vertical position of the hole
 
 # Where should the score, target and turn counter boxes be centered?
 SCORE_X = 700
 SCORE_Y = 300
 
 # Special game pieces
-EMPTY = -1
-BURST = 6
+EMPTY = -1  # Power up to clear the board
+BURST = 6   # Power up bomb, clears the 6 spaces surrounding the tile
 
 # Game state
-RUNNING = 0
-WIN = 1
-LOSE = -1
+RUNNING = 0   # initiates game to running
+WIN = 1       # initiates win
+LOSE = -1     # initiates loss
 
 ###############################################################################
 #
@@ -50,7 +50,9 @@ LOSE = -1
 #  Returns: None -- the game board passed as a parameter is modified
 #
 def swap(board, r1, c1, r2, c2):
+ # module for swapping tiles. add doc string
   pass
+
 
 #
 #  Modify the board to clear all occurences of a given piece, replacing them
@@ -63,6 +65,7 @@ def swap(board, r1, c1, r2, c2):
 #  Returns: None -- the game board passed as a parameter is modified
 #
 def clearAll(board, sym):
+  # module for the clear all powerup. add doc string
   pass
 
 #
@@ -82,6 +85,7 @@ def clearAll(board, sym):
 #  Returns: True if the proposed swap creates a line.  False otherwise.
 #
 def canSwap(board, r1, c1, r2, c2):
+  # module to find if the tiles are able to be swapped. (i.e. only 4 swapable tiles, NSEW)
   return True
 
 #
@@ -96,6 +100,7 @@ def canSwap(board, r1, c1, r2, c2):
 #           is possible then -1, -1, -1, -1 is returned.
 #
 def hint(board):
+  # module to provide a hint to the player (is it already on the game board?)
   return -1, -1, -1, -1
 
 ##############################################################################
