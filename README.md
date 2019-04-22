@@ -8,8 +8,8 @@ https://help.github.com/en/articles/set-up-git
 ### How to clone the Repo
 https://help.github.com/en/articles/which-remote-url-should-i-use#cloning-with-https-urls-recommended
 
-# GIT for the Commandline
+# GIT for the Commandline - Tutorial
 https://rogerdudler.github.io/git-guide/
 
-# GIT for Windows (GUI)
+# GIT for Windows (GUI) - Tutorial
 https://code.tutsplus.com/tutorials/git-on-windows-for-newbs--net-25847
