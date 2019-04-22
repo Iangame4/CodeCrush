@@ -38,7 +38,17 @@ LOSE = -1
 #
 #  Insert your implementation of createBoard here
 #
+"""
 
+"""
+def createBoard(iRows, iCols, iPieces):
+    gameBoard = []
+    for row in range(iRows):
+        rowList = []
+        for col in range(iCols):
+            rowList.append(randrange(0, iPieces))
+        gameBoard.append(rowList)
+    return gameBoard
 #
 #  Modify the board by swapping two pieces.
 #
