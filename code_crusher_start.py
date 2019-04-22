@@ -39,7 +39,17 @@ LOSE = -1     # initiates loss
 #  Insert your implementation of createBoard here
 #
 """
-
+The method name: createBoard()
+the purpose of the method: creates the list that the player will play with
+the methods pre and post conditions: none
+(these are assumptions you make about the data types and ranges
+of the input and output data for this function)
+the methods return value (if any): gameBoard as a 2-dimensional list with 
+  randomly generated values
+A list of all parameters and their purposes:
+  iRows - number of rows on the gameBoard
+  iCols - number of columns on the gameBoard
+  iPieces - restriction on what piece types can be in play
 """
 def createBoard(iRows, iCols, iPieces):
     gameBoard = []
