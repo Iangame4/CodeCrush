@@ -16,3 +16,6 @@ https://rogerdudler.github.io/git-guide/
 
 # GIT for Windows (GUI) - Tutorial
 https://code.tutsplus.com/tutorials/git-on-windows-for-newbs--net-25847
+
+# Basic GIT Desktop (GUI) - Tutorial
+https://www.theserverside.com/video/Test-Git-command-basics-on-the-GitHub-Desktop-app
