@@ -53,10 +53,24 @@ A list of all parameters and their purposes:
 """
 def createBoard(iRows, iCols, iPieces):
     gameBoard = []
+    # gameBoard is the list that will contain the piece identification
+    # for all playable positions on the board
+
+    # Outer loop runs for every row desired for the game board
     for row in range(iRows):
         rowList = []
+        # rowList is a temporary list that holds the identification of
+        # the different pieces in each row
+
+        # Inner loop runs for every column in each row.
         for col in range(iCols):
+            # for every position, generates a random integer to indicate
+            # what piece spawns on board creation. This integer is appended
+            # into the rowList list
             rowList.append(randrange(0, iPieces))
+
+        # After every piece has been added into a row, that row is added
+        # to the gameBoard
         gameBoard.append(rowList)
     return gameBoard
 #
