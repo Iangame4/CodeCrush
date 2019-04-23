@@ -84,8 +84,17 @@ def createBoard(iRows, iCols, iPieces):
 #  Returns: None -- the game board passed as a parameter is modified
 #
 def swap(board, r1, c1, r2, c2):
- # module for swapping tiles. add doc string
-  pass
+    """
+    Swap elements in our 2d list and give points if the swap is valid
+    :param board: the list we will be swaping
+    :param r1: row 1 in board list
+    :param c1: column 1 in board list
+    :param r2: row 2 in board list
+    :param c2: column 2 in board list
+    :return: none
+    """
+    board[r1][c1], board[r2][c2] = board[r2][c2], board[r1][c1]
+
 
 
 #
