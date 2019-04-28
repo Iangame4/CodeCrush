@@ -93,7 +93,7 @@ def swap(board, r1, c1, r2, c2):
     :param c2: column 2 in board list
     :return: none
     """
-    board[r1][c1], board[r2][c2] = board[r2][c2], board[r1][c1]
+    board[r1][c1], board[r2][c2] = board[r2][c2], board[r1][c1]  # Swap our array elements
 
 
 
