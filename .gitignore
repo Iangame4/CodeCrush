@@ -67,3 +67,4 @@ fabric.properties
 .idea/caches/build_file_checksums.ser
 
 *.pyc
+__pycache__/SimpleGraphics.cpython-37.pyc
