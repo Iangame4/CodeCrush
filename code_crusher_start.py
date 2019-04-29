@@ -119,10 +119,10 @@ def clearAll(board, sym):
     :return:
     """
     # module for the clear all powerup. add doc string
-    for y in range(len(board)): # For y in the range of the length of the board
-        for x in range(len(board[0])): # For x in the range of the length of first row
-            if board[y][x] == sym: # If symbol is the same as the value of sym
-                board[y][x] = EMPTY # Set the piece to equal empty
+    for x in range(len(board)): # For y in the range of the length of the board
+        for y in range(len(board[0])): # For x in the range of the length of first row
+            if board[x][y] == sym: # If symbol is the same as the value of sym
+                board[x][y] = EMPTY # Set the piece to equal empty
 
 
 #
@@ -159,6 +159,12 @@ def canSwap(board, r1, c1, r2, c2):
 #
 def hint(board):
     # module to provide a hint to the player (is it already on the game board?)
+    for x in range(len(board)):  # TODO: Complete this code after Mark finishes canSwap
+        for y in range(len(board[0])):
+            pass
+            #if y == 0 and x == 0:
+
+
     return -1, -1, -1, -1
 
 
