@@ -111,11 +111,18 @@ def swap(board, r1, c1, r2, c2):
 #  Returns: None -- the game board passed as a parameter is modified
 #
 def clearAll(board, sym):
+    """
+    Method Name: clearAll()
+    Description: Method called to clear occurence of given pieces and replace with EMPTY
+    :param board: the list to be used for swapping
+    :param sym: symbol that should be removed
+    :return:
+    """
     # module for the clear all powerup. add doc string
-    for y in range(len(board)):
-        for x in range(len(board[0])):
-            if board[y][x] == sym:
-                board[y][x] = EMPTY
+    for y in range(len(board)): # For y in the range of the length of the board
+        for x in range(len(board[0])): # For x in the range of the length of first row
+            if board[y][x] == sym: # If symbol is the same as the value of sym
+                board[y][x] = EMPTY # Set the piece to equal empty
 
 
 #
