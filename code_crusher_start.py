@@ -128,7 +128,32 @@ def clearAll(board, sym):
 #
 #  Insert your implementations of vLineAt and hLineAt here
 #
+def hLineAt(board, r1, c1, r2, c2):
+    # TODO: Implement logic to exclude piece one from checking pieces adjacent to piece 2
+    # TODO: Might need to rework decision statements
+    # TODO: Prints debugging statements to the console currently
+    rBound = len(board[0])
+    lBound = 0
+    uBound = 0
+    dBound = 0
+    # First checks if inteded match was used by the first selected piece
+    # If the match is intended at the left of the line
+    if (c2 + 2 < rBound):
+        if board[r1][c1] == board[r2][c2 + 1] and board[r1][c1] == board[r2][c2 + 2] and \
+           (r1 != r2 and c1 != c2 + 1) and (r1 != r2 and c1 != c2 + 2):
+            print("Can switch (left)")
 
+    # If the match is intended at the middle of the line
+    if c2 - 1 >= lBound and c2 + 1 < rBound:
+        if (board[r1][c1] == board[r2][c2 - 1]) and (board[r1][c1] == board[r2][c2 + 1]) and \
+            (r1 != r2 and c1 != c2 - 1) and (r1 != r2 and c1 != c2 + 1):
+
+            print("Can switch (middle)")
+
+    # If the match is intended at the right of the line
+    if (c2 - 2 >= lBound):
+        if (board[r1][c1] == board[r2][c2 - 2]) and (board[r1][c1] == board[r2][c2 - 1]):
+            print("Can switch (right)")
 #
 #  Report whether or not two pieces on the board can be swapped.  The function
 #  should only return true when performing the swap results in a line being
@@ -143,6 +168,7 @@ def clearAll(board, sym):
 #
 def canSwap(board, r1, c1, r2, c2):
     # module to find if the tiles are able to be swapped. (i.e. only 4 swapable tiles, NSEW)
+    hLineAt(board, r1, c1, r2, c2)
     return True
 
 
