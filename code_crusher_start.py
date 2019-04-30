@@ -128,6 +128,18 @@ def clearAll(board, sym):
 #
 #  Insert your implementations of vLineAt and hLineAt here
 #
+def vLineAt(board, r1, c1):
+	# TODO: stil need to comlete logic to find pieces on the board
+    if board[r1][c1] == board[r1][c1+1] and board[r1][c1] == board[r1][c1+2]:
+        return True
+    elif board[r1][c1] == board[r1][c1-1] and board[r1][c1] == board[r1][c1+1]:
+        return True
+    elif board[r1][c1] == board[r1][c1-1] and board[r1][c1] == board[r1][c1-2]:
+        return True
+    else:
+        return False
+
+
 def hLineAt(board, r1, c1, r2, c2):
     # TODO: Implement logic to exclude piece one from checking pieces adjacent to piece 2
     # TODO: Might need to rework decision statements
