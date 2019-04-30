@@ -128,7 +128,7 @@ def clearAll(board, sym):
 #
 #  Insert your implementations of vLineAt and hLineAt here
 #
-def vLineAt(board, r1, c1, r2, c2):
+def vLineAt(board, r1, c1):
 	# TODO: stil need to comlete logic to find pieces on the board
     if board[r1][c1] == board[r1][c1+1] and board[r1][c1] == board[r1][c1+2]:
         return True
@@ -140,7 +140,7 @@ def vLineAt(board, r1, c1, r2, c2):
         return False
 
 
-def hLineAt(board, r1, c1, r2, c2):
+def hLineAt(board, row, col):
     # TODO: Prints debugging statements to the console currently
     # TODO: Remove debugging statments when need be
 
@@ -152,63 +152,26 @@ def hLineAt(board, r1, c1, r2, c2):
     lBound = 0
     # lBound represents the left side boundary of the board
 
-    # First checks if intended match was used by the first selected piece
-
     # If the match is intended at the left of the line
     # Makes sure there are enough spaces from the right end of the board to test
-    if c2 + 2 < rBound:
-        # Makes sure piece 1 is not immediate right of piece 2
-        if c1 != c2 + 1:
-            if board[r1][c1] == board[r2][c2 + 1] and board[r1][c1] == board[r2][c2 + 2]:
-                # print("Can swap (left piece)")
-                return True
+    if col + 2 < rBound:
+        if board[row][col] == board[row][col + 1] and board[row][col] == board[row][col + 2]:
+            print("Can swap (left piece)")
+            return True
 
     # If the match is intended in the middle of the line
-    # Makes sure there are enough spaces on both sides of piece 2
-    if c2 + 1 < rBound and c2 - 1 >= lBound:
-        # Makes sure piece 1 is not immediate right or left of piece 2
-        if c1 != c2 + 1 and c1 != c2 - 1:
-            if board[r1][c1] == board[r2][c2 + 1] and board[r1][c1] == board[r2][c2 - 1]:
-                # print("Can swap (middle piece)")
-                return True
+    # Makes sure there are enough spaces on both sides of piece
+    if col + 1 < rBound and col - 1 >= lBound:
+        if board[row][col] == board[row][col + 1] and board[row][col - 1]:
+            print("Can swap (middle piece)")
+            return True
 
     # If the match is intended at the right of the line
     # Makes sure there are enough spaces from the left end of the board to test
-    if c2 - 2 >= lBound:
-        # Makes sure piece 1 is not immediate left of piece 2
-        if c1 != c2 - 1:
-            if board[r1][c1] == board[r2][c2 - 1] and board[r1][c1] == board[r2][c2 - 2]:
-                # print("Can swap (right piece)")
-                return True
-
-    # Then checks if intended match was used by the second selected piece
-
-    # If the match is intended at the left of the line
-    # Makes sure there are enough spaces from the right end of the board to test
-    if c1 + 2 < rBound:
-        # Makes sure piece 2 is not immediate right of piece 1
-        if c2 != c1 + 1:
-            if board[r2][c2] == board[r1][c1 + 1] and board[r2][c2] == board[r1][c1 + 2]:
-                # print("Can swap second (left piece)")
-                return True
-
-    # If the match is intended in the middle of the line
-    # Makes sure there are enough spaces on both sides of piece 1
-    if c1 + 1 < rBound and c1 - 1 >= lBound:
-        # Makes sure piece 1 is not immediate right or left of piece 2
-        if c2 != c1 + 1 and c2 != c1 - 1:
-            if board[r2][c2] == board[r1][c1 + 1] and board[r2][c2] == board[r1][c1 - 1]:
-                # print("Can swap second (middle piece)")
-                return True
-
-    # If the match is intended at the right of the line
-    # Makes sure there are enough spaces from the left end of the board to test
-    if c1 - 2 >= lBound:
-        # Makes sure piece 2 is not immediate left of piece 1
-        if c2 != c1 - 1:
-            if board[r2][c2] == board[r1][c1 - 1] and board[r2][c2] == board[r1][c1 - 2]:
-                # print("Can swap second (right piece)")
-                return True
+    if col - 2 >= lBound:
+        if board[row][col] == board[row][col - 1] and board[row][col] == board[row][col - 2]:
+            print("Can swap (right piece)")
+            return True
 
     # Returns false if none of the other cases hold
     return False
@@ -227,19 +190,19 @@ def hLineAt(board, r1, c1, r2, c2):
 #
 def canSwap(board, r1, c1, r2, c2):
     # module to find if the tiles are able to be swapped. (i.e. only 4 swapable tiles, NSEW)
-    # TODO: Need to implement vLineAt() when it is completed
-    # TODO: Function is working correctly using hLineAt(). For debugging purposes,
-    # TODO: Comment out the if statement and uncomment the return true to test debugging of vLineAt()
-    if hLineAt(board, r1, c1, r2, c2):
+
+    # First, swap pieces on the board to perform test cases.
+    swap(board, r1, c1, r2, c2)
+
+    # Checks both locations that have been switched using hLineAt() and vLineAt() to check for
+    # appropriate cases
+    # Swaps board after every case, otherwise swap animation acts odd.
+    if hLineAt(board, r2, c2) or hLineAt(board, r1, c1) or vLineAt(board, r2, c2) or vLineAt(board, r1, c1):
+        swap(board, r1, c1, r2, c2)
         return True
     else:
+        swap(board, r1, c1, r2, c2)
         return False
-
-
-    # vLineAt(board, r1, c1, r2, c2)
-    # return True
-
-
 
 #
 #  Identify two adjacent positions on the board that can be swapped to
