@@ -142,8 +142,6 @@ def clearAll(board, sym):
 #  Insert your implementations of vLineAt and hLineAt here
 #
 def vLineAt(board, r1, c1):
-    # TODO: stil need to comlete logic to find pieces on the board
-
     # Bottom boundary of the board
     bBound = len(board)
     # Top boundary of the board
@@ -152,17 +150,14 @@ def vLineAt(board, r1, c1):
     # Checks to see if match intended for top of pattern is valid
     if r1 + 2 < bBound:
         if board[r1][c1] == board[r1 + 1][c1] and board[r1][c1] == board[r1 + 2][c1]:
-            # print("Can swap (top piece)")
             return True
     # Checks to see if match intended for middle of pattern is valid
     if r1 + 1 < bBound and r1 - 1 >= tBound:
         if board[r1][c1] == board[r1 - 1][c1] and board[r1][c1] == board[r1 + 1][c1]:
-            # print("Can swap (middle piece)")
             return True
     # Checks to see if match intended for bottom of pattern is valid
     if r1 - 2 >= tBound:
         if board[r1][c1] == board[r1 - 1][c1] and board[r1][c1] == board[r1 - 2][c1]:
-            # print("Can swap (bottom piece)")
             return True
 
     # Returns false of none are true
@@ -170,12 +165,6 @@ def vLineAt(board, r1, c1):
 
 
 def hLineAt(board, row, col):
-    # TODO: Prints debugging statements to the console currently
-    # TODO: Remove debugging statments when need be
-
-    # TODO: Only needs one test case to hold to return true, even
-    # TODO: if other test cases hold. The first one to hold will only
-    # TODO: be printed.
     rBound = len(board[0])
     # rBound represents the right side boundary of the board
     lBound = 0
@@ -185,21 +174,18 @@ def hLineAt(board, row, col):
     # Makes sure there are enough spaces from the right end of the board to test
     if col + 2 < rBound:
         if board[row][col] == board[row][col + 1] and board[row][col] == board[row][col + 2]:
-            # print("Can swap (left piece)")
             return True
 
     # If the match is intended in the middle of the line
     # Makes sure there are enough spaces on both sides of piece
     if col + 1 < rBound and col - 1 >= lBound:
         if board[row][col] == board[row][col + 1] and board[row][col] == board[row][col - 1]:
-            # print("Can swap (middle piece)")
             return True
 
     # If the match is intended at the right of the line
     # Makes sure there are enough spaces from the left end of the board to test
     if col - 2 >= lBound:
         if board[row][col] == board[row][col - 1] and board[row][col] == board[row][col - 2]:
-            # print("Can swap (right piece)")
             return True
 
     # Returns false if none of the other cases hold
