@@ -118,7 +118,7 @@ def vLineAt(board, r1, c1):
     :param board: the list to be used for swapping
     :param r1: row being used in the board
     :param c1: column being used in the board
-    :return:
+    :return: True if a vertical line was made. False otherwise.
     """
     # Bottom boundary of the board
     bBound = len(board)
