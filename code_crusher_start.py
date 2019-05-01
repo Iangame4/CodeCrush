@@ -1,3 +1,16 @@
+###############################################################################
+#  File: code_crusher_start.py
+#
+#  Author(s): Doctor Grasser, Anto, David, Ian Pike, Mark, Nina
+#  Description:
+#               Main file for running our game loop. Starter code by
+#               Dr. Grasser and finished code worked on by other listed authors.
+#               Code crushers is a match 3 candy crush clone made in python.
+#
+#  External Libraries: 
+#               SimpleGraphics.py - Copyright (C) 2013, 2014, 2015, 2017 Ben Stephenson
+###############################################################################
+
 #
 #  The location to insert your code is clearly marked -- it begins on line 32.
 #
