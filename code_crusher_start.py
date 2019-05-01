@@ -26,7 +26,7 @@ import traceback
 import os
 
 # Where is the 'hole' for the game board in the background image?
-HOFF = 200  # Horizonal position of the hole
+HOFF = 200  # Horizontal position of the hole
 VOFF = 100  # Vertical position of the hole
 
 # Where should the score, target and turn counter boxes be centered?
@@ -34,8 +34,9 @@ SCORE_X = 700
 SCORE_Y = 300
 
 # Special game pieces
-EMPTY = -1  # Power up to clear the board
-BURST = 6  # Power up bomb, clears the 6 spaces surrounding the tile
+EMPTY = -1  # Represents an empty space on the board
+BURST = 6  # Power up bomb, clears the board of all pieces same to the one
+# Used to swap with it
 
 # Game state
 RUNNING = 0  # initiates game to running
@@ -48,9 +49,6 @@ LOSE = -1  # initiates loss
 #
 ###############################################################################
 
-#
-#  Insert your implementation of createBoard here
-#
 """
 The method name: createBoard()
 the purpose of the method: creates the list that the player will play with
@@ -90,69 +88,35 @@ def createBoard(iRows, iCols, iPieces):
     return gameBoard
 
 
-#
-#  Modify the board by swapping two pieces.
-#
-#  Parameters:
-#    board: The game board to modify by swapping the pieces
-#    r1, c1: The row and column of the first piece involved in the swap
-#    r2, c2: The row and column of the second piece to swap
-#
-#  Returns: None -- the game board passed as a parameter is modified
-#
 def swap(board, r1, c1, r2, c2):
     """
     Swap elements in our 2d list and give points if the swap is valid
-    :param board: the list we will be swaping
+    :param board: the list we will be swapping
     :param r1: row 1 in board list
     :param c1: column 1 in board list
     :param r2: row 2 in board list
     :param c2: column 2 in board list
-    :return: none
+    :return: none -- the game board passed as a parameter is modified
     """
     board[r1][c1], board[r2][c2] = board[r2][c2], board[r1][c1]  # Swap our array elements
 
 
-#
-#  Modify the board to clear all occurences of a given piece, replacing them
-#  with EMPTY.
-#
-#  Parameters:
-#    board: The game board to modify by swapping the pieces
-#    sym: The symbol that should be removed
-#
-#  Returns: None -- the game board passed as a parameter is modified
-#
 def clearAll(board, sym):
     """
     Method Name: clearAll()
-    Description: Method called to clear occurence of given pieces and replace with EMPTY
+    Description: Method called to clear instances of a given piece and replace with EMPTY
     :param board: the list to be used for swapping
     :param sym: symbol that should be removed
-    :return:
+    :return: none - modifies the game board
     """
     # module for the clear all powerup. add doc string
-    for x in range(len(board)): # For y in the range of the length of the board
-        for y in range(len(board[0])): # For x in the range of the length of first row
-            if board[x][y] == sym: # If symbol is the same as the value of sym
-                board[x][y] = EMPTY # Set the piece to equal empty
+    for x in range(len(board)):  # For y in the range of the length of the board
+        for y in range(len(board[0])):  # For x in the range of the length of first row
+            if board[x][y] == sym:  # If symbol is the same as the value of sym
+                board[x][y] = EMPTY  # Set the piece to equal empty
 
 
-#
-#  Insert your implementations of vLineAt and hLineAt here
-#
 def vLineAt(board, r1, c1):
-
-    """
-    Method Name: vLineAt()
-    Descrition: Function used to check the rows of the board to make sure that
-    the swap made by a user is valid or not outside of the boundary of the board
-    :param board: the list to be used for swapping
-    :param r1: row being used in the board
-    :param c1: column being used in the board
-    :return:
-    """
-
     # Bottom boundary of the board
     bBound = len(board)
     # Top boundary of the board
@@ -161,17 +125,14 @@ def vLineAt(board, r1, c1):
     # Checks to see if match intended for top of pattern is valid
     if r1 + 2 < bBound:
         if board[r1][c1] == board[r1 + 1][c1] and board[r1][c1] == board[r1 + 2][c1]:
-            print("Can swap (top piece)")
             return True
     # Checks to see if match intended for middle of pattern is valid
     if r1 + 1 < bBound and r1 - 1 >= tBound:
         if board[r1][c1] == board[r1 - 1][c1] and board[r1][c1] == board[r1 + 1][c1]:
-            print("Can swap (middle piece)")
             return True
     # Checks to see if match intended for bottom of pattern is valid
     if r1 - 2 >= tBound:
         if board[r1][c1] == board[r1 - 1][c1] and board[r1][c1] == board[r1 - 2][c1]:
-            print("Can swap (bottom piece)")
             return True
 
     # Returns false of none are true
@@ -188,21 +149,18 @@ def hLineAt(board, row, col):
     # Makes sure there are enough spaces from the right end of the board to test
     if col + 2 < rBound:
         if board[row][col] == board[row][col + 1] and board[row][col] == board[row][col + 2]:
-            print("Can swap (left piece)")
             return True
 
     # If the match is intended in the middle of the line
     # Makes sure there are enough spaces on both sides of piece
     if col + 1 < rBound and col - 1 >= lBound:
-        if board[row][col] == board[row][col + 1] and board[row][col - 1]:
-            print("Can swap (middle piece)")
+        if board[row][col] == board[row][col + 1] and board[row][col] == board[row][col - 1]:
             return True
 
     # If the match is intended at the right of the line
     # Makes sure there are enough spaces from the left end of the board to test
     if col - 2 >= lBound:
         if board[row][col] == board[row][col - 1] and board[row][col] == board[row][col - 2]:
-            print("Can swap (right piece)")
             return True
 
     # Returns false if none of the other cases hold
