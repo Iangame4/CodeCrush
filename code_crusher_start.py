@@ -129,15 +129,31 @@ def clearAll(board, sym):
 #  Insert your implementations of vLineAt and hLineAt here
 #
 def vLineAt(board, r1, c1):
-	# TODO: stil need to comlete logic to find pieces on the board
-    if board[r1][c1] == board[r1][c1+1] and board[r1][c1] == board[r1][c1+2]:
-        return True
-    elif board[r1][c1] == board[r1][c1-1] and board[r1][c1] == board[r1][c1+1]:
-        return True
-    elif board[r1][c1] == board[r1][c1-1] and board[r1][c1] == board[r1][c1-2]:
-        return True
-    else:
-        return False
+    # TODO: stil need to comlete logic to find pieces on the board
+
+    # Bottom boundary of the board
+    bBound = len(board)
+    # Top boundary of the board
+    tBound = 0
+
+    # Checks to see if match intended for top of pattern is valid
+    if r1 + 2 < bBound:
+        if board[r1][c1] == board[r1 + 1][c1] and board[r1][c1] == board[r1 + 2][c1]:
+            print("Can swap (top piece)")
+            return True
+    # Checks to see if match intended for middle of pattern is valid
+    if r1 + 1 < bBound and r1 - 1 >= tBound:
+        if board[r1][c1] == board[r1 - 1][c1] and board[r1][c1] == board[r1 + 1][c1]:
+            print("Can swap (middle piece)")
+            return True
+    # Checks to see if match intended for bottom of pattern is valid
+    if r1 - 2 >= tBound:
+        if board[r1][c1] == board[r1 - 1][c1] and board[r1][c1] == board[r1 - 2][c1]:
+            print("Can swap (bottom piece)")
+            return True
+
+    # Returns false of none are true
+    return False
 
 
 def hLineAt(board, row, col):

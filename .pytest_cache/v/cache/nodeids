@@ -1,0 +1,9 @@
+[
+  "code_crusher_start.py::test_createBoard",
+  "code_crusher_start.py::test_hLineAt",
+  "code_crusher_start.py::test_vLineAt",
+  "code_crusher_start.py::test_swap",
+  "code_crusher_start.py::test_canSwap",
+  "code_crusher_start.py::test_hint",
+  "code_crusher_start.py::test_clearAll"
+]
