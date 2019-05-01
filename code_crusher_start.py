@@ -1726,6 +1726,9 @@ def play(target_score, turns_left, num_rows, num_cols, num_syms, bg, cc_m, image
             for r in range(len(board)):
                 for c in range(len(board[r])):
                     board[r][c] = EMPTY
+            # Functionality added to reset score and remaining turns when the board has been reset
+            score = 0
+
 
         drawStatus(score, score_width, target_score, turns_left)
         index = 0
