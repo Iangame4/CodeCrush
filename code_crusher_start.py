@@ -13,7 +13,7 @@ import traceback
 import os
 
 # Where is the 'hole' for the game board in the background image?
-HOFF = 200  # Horizonal position of the hole
+HOFF = 200  # Horizontal position of the hole
 VOFF = 100  # Vertical position of the hole
 
 # Where should the score, target and turn counter boxes be centered?
@@ -21,8 +21,9 @@ SCORE_X = 700
 SCORE_Y = 300
 
 # Special game pieces
-EMPTY = -1  # Power up to clear the board
-BURST = 6  # Power up bomb, clears the 6 spaces surrounding the tile
+EMPTY = -1  # Represents an empty space on the board
+BURST = 6  # Power up bomb, clears the board of all pieces same to the one
+# Used to swap with it
 
 # Game state
 RUNNING = 0  # initiates game to running
@@ -90,7 +91,7 @@ def createBoard(iRows, iCols, iPieces):
 def swap(board, r1, c1, r2, c2):
     """
     Swap elements in our 2d list and give points if the swap is valid
-    :param board: the list we will be swaping
+    :param board: the list we will be swapping
     :param r1: row 1 in board list
     :param c1: column 1 in board list
     :param r2: row 2 in board list
@@ -98,7 +99,6 @@ def swap(board, r1, c1, r2, c2):
     :return: none
     """
     board[r1][c1], board[r2][c2] = board[r2][c2], board[r1][c1]  # Swap our array elements
-
 
 #
 #  Modify the board to clear all occurences of a given piece, replacing them
@@ -119,10 +119,10 @@ def clearAll(board, sym):
     :return:
     """
     # module for the clear all powerup. add doc string
-    for x in range(len(board)): # For y in the range of the length of the board
-        for y in range(len(board[0])): # For x in the range of the length of first row
-            if board[x][y] == sym: # If symbol is the same as the value of sym
-                board[x][y] = EMPTY # Set the piece to equal empty
+    for x in range(len(board)):  # For y in the range of the length of the board
+        for y in range(len(board[0])):  # For x in the range of the length of first row
+            if board[x][y] == sym:  # If symbol is the same as the value of sym
+                board[x][y] = EMPTY  # Set the piece to equal empty
 
 
 #
@@ -139,17 +139,17 @@ def vLineAt(board, r1, c1):
     # Checks to see if match intended for top of pattern is valid
     if r1 + 2 < bBound:
         if board[r1][c1] == board[r1 + 1][c1] and board[r1][c1] == board[r1 + 2][c1]:
-            print("Can swap (top piece)")
+            # print("Can swap (top piece)")
             return True
     # Checks to see if match intended for middle of pattern is valid
     if r1 + 1 < bBound and r1 - 1 >= tBound:
         if board[r1][c1] == board[r1 - 1][c1] and board[r1][c1] == board[r1 + 1][c1]:
-            print("Can swap (middle piece)")
+            # print("Can swap (middle piece)")
             return True
     # Checks to see if match intended for bottom of pattern is valid
     if r1 - 2 >= tBound:
         if board[r1][c1] == board[r1 - 1][c1] and board[r1][c1] == board[r1 - 2][c1]:
-            print("Can swap (bottom piece)")
+            # print("Can swap (bottom piece)")
             return True
 
     # Returns false of none are true
@@ -172,21 +172,21 @@ def hLineAt(board, row, col):
     # Makes sure there are enough spaces from the right end of the board to test
     if col + 2 < rBound:
         if board[row][col] == board[row][col + 1] and board[row][col] == board[row][col + 2]:
-            print("Can swap (left piece)")
+            # print("Can swap (left piece)")
             return True
 
     # If the match is intended in the middle of the line
     # Makes sure there are enough spaces on both sides of piece
     if col + 1 < rBound and col - 1 >= lBound:
-        if board[row][col] == board[row][col + 1] and board[row][col - 1]:
-            print("Can swap (middle piece)")
+        if board[row][col] == board[row][col + 1] and board[row][col] == board[row][col - 1]:
+            # print("Can swap (middle piece)")
             return True
 
     # If the match is intended at the right of the line
     # Makes sure there are enough spaces from the left end of the board to test
     if col - 2 >= lBound:
         if board[row][col] == board[row][col - 1] and board[row][col] == board[row][col - 2]:
-            print("Can swap (right piece)")
+            # print("Can swap (right piece)")
             return True
 
     # Returns false if none of the other cases hold
