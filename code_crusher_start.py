@@ -1,7 +1,7 @@
 ###############################################################################
 #  File: code_crusher_start.py
 #
-#  Author(s): Doctor Grasser, Anto, David, Ian Pike, Mark, Nina
+#  Author(s): Dr. Grasser, Anto Ivicevic, David Dunnigan, Ian Pike, Mark Dacar, Nina Bacon
 #  Description:
 #               Main file for running our game loop. Starter code by
 #               Dr. Grasser and finished code worked on by other listed authors.
