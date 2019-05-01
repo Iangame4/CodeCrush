@@ -111,6 +111,15 @@ def clearAll(board, sym):
 
 
 def vLineAt(board, r1, c1):
+    """
+    Method Name: vLineAt()
+    Descrition: Function used to check the rows of the board to make sure that
+    the swap made by a user is valid or not outside of the boundary of the board
+    :param board: the list to be used for swapping
+    :param r1: row being used in the board
+    :param c1: column being used in the board
+    :return:
+    """
     # Bottom boundary of the board
     bBound = len(board)
     # Top boundary of the board
@@ -196,24 +205,13 @@ def canSwap(board, r1, c1, r2, c2):
         swap(board, r1, c1, r2, c2)
         return False
 
-#
-#  Identify two adjacent positions on the board that can be swapped to
-#  form a line.
-#
-#  Parameters:
-#    board: The game board to be checked
-#
-#  Returns: The row and column of the first piece, followed by the row and
-#           column of the second piece involved in the swap.  If no swap
-#           is possible then -1, -1, -1, -1 is returned.
-#
+
 def hint(board):
     # module to provide a hint to the player (is it already on the game board?)
     for x in range(len(board)):  # TODO: Complete this code after Mark finishes canSwap
         for y in range(len(board[0])):
             pass
-            #if y == 0 and x == 0:
-
+            # if y == 0 and x == 0:
 
     return -1, -1, -1, -1
 
