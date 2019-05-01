@@ -49,9 +49,6 @@ LOSE = -1  # initiates loss
 #
 ###############################################################################
 
-#
-#  Insert your implementation of createBoard here
-#
 """
 The method name: createBoard()
 the purpose of the method: creates the list that the player will play with
@@ -91,16 +88,6 @@ def createBoard(iRows, iCols, iPieces):
     return gameBoard
 
 
-#
-#  Modify the board by swapping two pieces.
-#
-#  Parameters:
-#    board: The game board to modify by swapping the pieces
-#    r1, c1: The row and column of the first piece involved in the swap
-#    r2, c2: The row and column of the second piece to swap
-#
-#  Returns: None -- the game board passed as a parameter is modified
-#
 def swap(board, r1, c1, r2, c2):
     """
     Swap elements in our 2d list and give points if the swap is valid
@@ -113,23 +100,14 @@ def swap(board, r1, c1, r2, c2):
     """
     board[r1][c1], board[r2][c2] = board[r2][c2], board[r1][c1]  # Swap our array elements
 
-#
-#  Modify the board to clear all occurences of a given piece, replacing them
-#  with EMPTY.
-#
-#  Parameters:
-#    board: The game board to modify by swapping the pieces
-#    sym: The symbol that should be removed
-#
-#  Returns: None -- the game board passed as a parameter is modified
-#
+
 def clearAll(board, sym):
     """
     Method Name: clearAll()
-    Description: Method called to clear occurence of given pieces and replace with EMPTY
+    Description: Method called to clear instances of a given piece and replace with EMPTY
     :param board: the list to be used for swapping
     :param sym: symbol that should be removed
-    :return:
+    :return: none - modifies the game board
     """
     # module for the clear all powerup. add doc string
     for x in range(len(board)):  # For y in the range of the length of the board
@@ -138,9 +116,6 @@ def clearAll(board, sym):
                 board[x][y] = EMPTY  # Set the piece to equal empty
 
 
-#
-#  Insert your implementations of vLineAt and hLineAt here
-#
 def vLineAt(board, r1, c1):
     # Bottom boundary of the board
     bBound = len(board)
