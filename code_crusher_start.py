@@ -117,6 +117,15 @@ def clearAll(board, sym):
 
 
 def vLineAt(board, r1, c1):
+    """
+    Method Name: vLineAt()
+    Descrition: Function used to check the rows of the board to make sure that
+    the swap made by a user is valid or not outside of the boundary of the board
+    :param board: the list to be used for swapping
+    :param r1: row being used in the board
+    :param c1: column being used in the board
+    :return:
+    """
     # Bottom boundary of the board
     bBound = len(board)
     # Top boundary of the board
