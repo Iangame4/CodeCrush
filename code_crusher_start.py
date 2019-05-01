@@ -96,7 +96,7 @@ def swap(board, r1, c1, r2, c2):
     :param c1: column 1 in board list
     :param r2: row 2 in board list
     :param c2: column 2 in board list
-    :return: none
+    :return: none -- the game board passed as a parameter is modified
     """
     board[r1][c1], board[r2][c2] = board[r2][c2], board[r1][c1]  # Swap our array elements
 
