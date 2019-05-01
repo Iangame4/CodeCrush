@@ -207,6 +207,16 @@ def canSwap(board, r1, c1, r2, c2):
 
 
 def hint(board):
+    """
+    Identify two adjacent positions on the board that can be swapped to form a line.
+
+    Provide a hint to the user if a possible move is available on the board
+    if a move is not available then allow the user to restart or quit the game.
+    :param board: The game board to be checked
+    :return: The row and column of the first piece, followed by the row and
+             column of the second piece involved in the swap.  If no swap
+             is possible then -1, -1, -1, -1 is returned.
+    """
     # module to provide a hint to the player (is it already on the game board?)
     for x in range(len(board)):  # TODO: Complete this code after Mark finishes canSwap
         for y in range(len(board[0])):
