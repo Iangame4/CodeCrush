@@ -1383,7 +1383,8 @@ def play(target_score, turns_left, num_rows, num_cols, num_syms, bg, cc_m, image
     hoff = HOFF + (8 - num_cols) * 25
     voff = VOFF + (8 - num_rows) * 25
 
-    # used to reset the turns counter -- this is a set value that wont change
+    # Used to reset the turns counter -- this is a set value that wont change
+    # We are using the received turns_left counter at the start and storing it for later use
     localTurns = turns_left
 
     frame_count = 0
