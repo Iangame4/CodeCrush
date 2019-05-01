@@ -49,22 +49,16 @@ LOSE = -1  # initiates loss
 #
 ###############################################################################
 
-"""
-The method name: createBoard()
-the purpose of the method: creates the list that the player will play with
-the methods pre and post conditions: none
-(these are assumptions you make about the data types and ranges
-of the input and output data for this function)
-the methods return value (if any): gameBoard as a 2-dimensional list with 
-  randomly generated values
-A list of all parameters and their purposes:
-  iRows - number of rows on the gameBoard
-  iCols - number of columns on the gameBoard
-  iPieces - restriction on what piece types can be in play
-"""
-
 
 def createBoard(iRows, iCols, iPieces):
+    """
+    Method Name: createBoard()
+    Description: Method called to create a board with random pieces
+    :param iRows: the number of rows to include on the list
+    :param iCols: the number of columns to include on the list
+    :param iPieces: the number of different pieces to be included on the board
+    :return: gameboard -- the list of all pieces in play
+    """
     gameBoard = []
     # gameBoard is the list that will contain the piece identification
     # for all playable positions on the board
@@ -140,6 +134,15 @@ def vLineAt(board, r1, c1):
 
 
 def hLineAt(board, row, col):
+    """
+    Method Name: hLineAt()
+    Description: Method called to determine if a horizontal line of three pieces is made
+    :param board: the list used to check piece values
+    :param row: the row of the piece being examined
+    :param col: the column of the piece being examined
+    :return: True if a horizontal line of three pieces has been created - otherwise, False
+    """
+
     rBound = len(board[0])
     # rBound represents the right side boundary of the board
     lBound = 0
@@ -166,19 +169,18 @@ def hLineAt(board, row, col):
     # Returns false if none of the other cases hold
     return False
 
-#
-#  Report whether or not two pieces on the board can be swapped.  The function
-#  should only return true when performing the swap results in a line being
-#  formed.
-#
-#  Parameters:
-#    board: The game board to be checked
-#    r1, c1: The row and column of the first piece involved in the swap
-#    r2, c2: The row and column of the second piece to swap
-#
-#  Returns: True if the proposed swap creates a line.  False otherwise.
-#
+
 def canSwap(board, r1, c1, r2, c2):
+    """
+    Method Name: canSwap()
+    Description: Reports whether or not two pieces on the board can be swapped
+    :param board: the list to be used to check piece values
+    :param r1: the row of the first piece
+    :param c1: the column of the first piece
+    :param r2: the row of the second piece
+    :param c2: the column of the second piece
+    :return: True if the proposed swap creates a line. False otherwise
+    """
     # module to find if the tiles are able to be swapped. (i.e. only 4 swapable tiles, NSEW)
 
     # First, swap pieces on the board to perform test cases.
