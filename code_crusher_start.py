@@ -217,13 +217,21 @@ def hint(board):
              column of the second piece involved in the swap.  If no swap
              is possible then -1, -1, -1, -1 is returned.
     """
+    # TODO: Fix loops all values are tested
+    # TODO: Not returning best  value
+    # TODO: Uncomment bomb  statements
+    # TODO: Remove debug statements
+    # TODO: Comment EVERYTHING (Mark and Ian will know how)
     uBound = 0
     dBound = len(board)
     lBound = 0
     rBound = len(board[0])
 
+    maxValue = {"pos": [-1, -1, -1, -1], "value": 0}
+    tempValue = {"pos": [-1, -1, -1, -1], "value": 0}
+
     # module to provide a hint to the player (is it already on the game board?)
-    for x in range(len(board) - 1, 0, -1):  # TODO: Complete this code after Mark finishes canSwap
+    for x in range(len(board) - 1, 0, -1):
         for y in range(len(board[0]) - 1, 0, -1):
             # If a bomb is encountered on the board, pick the best swap available
             """
@@ -259,8 +267,6 @@ def hint(board):
             pieceUp = 0
             pieceDown = 0
 
-            maxValue = {"pos": [-1, -1, -1, -1], "value": 0}
-            tempValue = {"pos": [-1, -1, -1, -1], "value": 0}
             # Swapping Left
             if y - 1 >= lBound and canSwap(board, x, y, x, y - 1):
                 tempUp = 0
@@ -309,7 +315,7 @@ def hint(board):
                     else:
                         break
 
-                for j in range(y + 2, rBound):
+                for j in range(y + 2, rBound - 1):
                     if board[x][y] == board[x][j]:
                         tempRight += 1
                     else:
@@ -327,7 +333,7 @@ def hint(board):
                 tempRight = 0
                 tempLeft = 0
 
-                for i in range(x + 2, lBound):
+                for i in range(x + 2, lBound - 1):
                     if board[x][y] == board[i][y]:
                         tempUp += 1
                     else:
@@ -363,7 +369,7 @@ def hint(board):
                     else:
                         break
 
-                for i in range(y+1, rBound):
+                for i in range(y+1, rBound - 1):
                     if board[x][y] == board[x+1][i]:
                         tempRight += 1
                     else:
@@ -382,26 +388,30 @@ def hint(board):
                     pieceDown += tempDown
 
             # Determine which swap is best for a certain piece
-            if pieceLeft >= pieceRight and pieceUp and pieceDown:
-                tempValue["pos"] = [x, y, x, y-1]
+            print(pieceLeft, pieceRight, pieceUp, pieceDown)
+            if pieceLeft >= pieceRight and pieceLeft >= pieceUp and pieceLeft >= pieceDown:
+                tempValue["pos"] = [x, y, x, y - 1]
                 tempValue["value"] = pieceLeft
-            elif pieceRight >= pieceLeft and pieceUp and pieceDown:
+                print(tempValue, x, y, pieceLeft)
+            elif pieceRight >= pieceLeft and pieceRight >= pieceUp and pieceRight >= pieceDown:
                 tempValue["pos"] = [x, y, x, y+1]
                 tempValue["value"] = pieceRight
-            elif pieceUp >= pieceLeft and pieceRight and pieceDown:
+                print(tempValue, x, y, pieceLeft)
+            elif pieceUp >= pieceLeft and pieceUp >= pieceRight and pieceUp >= pieceDown:
                 tempValue["pos"] = [x, y, x - 1, y]
                 tempValue["value"] = pieceUp
-            elif pieceDown >= pieceLeft and pieceRight and pieceUp:
+                print(tempValue, x, y, pieceLeft)
+            elif pieceDown >= pieceLeft and pieceDown >= pieceRight and pieceDown >= pieceUp:
                 tempValue["pos"] = [x, y, x + 1, y]
                 tempValue["value"] = pieceDown
+                print(tempValue, x, y, pieceLeft)
 
             if maxValue.get("value", 0) < tempValue.get("value", 0):
                 maxValue.update(tempValue)
 
     print(maxValue)
 
-
-    return -1, -1, -1, -1
+    return maxValue.get("pos")
 
 def countBoard(board):
     """
