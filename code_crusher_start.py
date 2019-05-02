@@ -226,7 +226,7 @@ def hint(board):
     for x in range(len(board) - 1, 0, -1):  # TODO: Complete this code after Mark finishes canSwap
         for y in range(len(board[0]) - 1, 0, -1):
             # If a bomb is encountered on the board, pick the best swap available
-
+            """
             if board[x][y] == 6:
                 # Obtaining a dictionary of the number of all pieces on the board
                 pieces = countBoard(board)
@@ -253,13 +253,14 @@ def hint(board):
                     return x, y, x-1, y
                 elif uPiece >= dPiece and lPiece and rPiece:
                     return x, y, x+1, y
-
+            """
             pieceLeft = 0
             pieceRight = 0
             pieceUp = 0
             pieceDown = 0
 
-
+            maxValue = {"pos": [-1, -1, -1, -1], "value": 0}
+            tempValue = {"pos": [-1, -1, -1, -1], "value": 0}
             # Swapping Left
             if y - 1 >= lBound and canSwap(board, x, y, x, y - 1):
                 tempUp = 0
@@ -379,6 +380,26 @@ def hint(board):
 
                 if tempDown == 2:
                     pieceDown += tempDown
+
+            # Determine which swap is best for a certain piece
+            if pieceLeft >= pieceRight and pieceUp and pieceDown:
+                tempValue["pos"] = [x, y, x, y-1]
+                tempValue["value"] = pieceLeft
+            elif pieceRight >= pieceLeft and pieceUp and pieceDown:
+                tempValue["pos"] = [x, y, x, y+1]
+                tempValue["value"] = pieceRight
+            elif pieceUp >= pieceLeft and pieceRight and pieceDown:
+                tempValue["pos"] = [x, y, x - 1, y]
+                tempValue["value"] = pieceUp
+            elif pieceDown >= pieceLeft and pieceRight and pieceUp:
+                tempValue["pos"] = [x, y, x + 1, y]
+                tempValue["value"] = pieceDown
+
+            if maxValue.get("value", 0) < tempValue.get("value", 0):
+                maxValue.update(tempValue)
+
+    print(maxValue)
+
 
     return -1, -1, -1, -1
 
