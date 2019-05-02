@@ -226,6 +226,7 @@ def hint(board):
     for x in range(len(board) - 1, 0, -1):  # TODO: Complete this code after Mark finishes canSwap
         for y in range(len(board[0]) - 1, 0, -1):
             # If a bomb is encountered on the board, pick the best swap available
+
             if board[x][y] == 6:
                 # Obtaining a dictionary of the number of all pieces on the board
                 pieces = countBoard(board)
@@ -257,23 +258,128 @@ def hint(board):
             pieceRight = 0
             pieceUp = 0
             pieceDown = 0
-            swaps = {}
+
 
             # Swapping Left
             if y - 1 >= lBound and canSwap(board, x, y, x, y - 1):
-                    for
+                tempUp = 0
+                tempDown = 0
+                tempLeft = 0
 
-            if y + 1 < rBound:
-                if canSwap(board, x, y, x, y + 1):
-                    print("Can Swap: Right Adjacent")
+                for i in range(x - 1, uBound, -1):
+                    if board[x][y] == board[i][y-1]:
+                        tempUp += 1
+                    else:
+                        break
 
-            if x - 1 >= uBound:
-                if canSwap(board, x, y, x - 1, y):
-                    print("Can Swap: Upper Adjacent")
+                for i in range(x + 1, dBound):
+                    if board[x][y] == board[i][y-1]:
+                        tempDown += 1
+                    else:
+                        break
 
-            if x + 1 < dBound:
-                if canSwap(board, x, y, x + 1, y):
-                    print("Can Swap: Lower Adjacent")
+                for j in range(y - 2, lBound, -1):
+                    if board[x][y] == board[x][j]:
+                        tempLeft += 1
+                    else:
+                        break
+
+                if tempUp + tempDown >= 2:
+                    pieceLeft += tempUp + tempDown
+
+                if tempLeft == 2:
+                    pieceLeft += tempLeft
+
+            # Swap right
+            if y + 1 < rBound and canSwap(board, x, y, x, y + 1):
+                tempUp = 0
+                tempDown = 0
+                tempRight = 0
+
+                for i in range(x - 1, uBound, -1):
+                    if board[x][y] == board[i][y - 1]:
+                        tempUp += 1
+                    else:
+                        break
+
+                for i in range(x + 1, dBound):
+                    if board[x][y] == board[i][y - 1]:
+                        tempDown += 1
+                    else:
+                        break
+
+                for j in range(y + 2, rBound):
+                    if board[x][y] == board[x][j]:
+                        tempRight += 1
+                    else:
+                        break
+
+                if tempUp + tempDown >= 2:
+                    pieceRight += tempUp + tempDown
+
+                if tempRight == 2:
+                    pieceRight += tempRight
+
+            # Swap up
+            if x - 1 >= uBound and canSwap(board, x, y, x - 1, y):
+                tempUp = 0
+                tempRight = 0
+                tempLeft = 0
+
+                for i in range(x + 2, lBound):
+                    if board[x][y] == board[i][y]:
+                        tempUp += 1
+                    else:
+                        break
+
+                for i in range(y + 1, dBound):
+                    if board[x][y] == board[x-1][i]:
+                        tempRight += 1
+                    else:
+                        break
+
+                for j in range(y - 1, lBound, -1):
+                    if board[x][y] == board[x-1][j]:
+                        tempLeft += 1
+                    else:
+                        break
+
+                if tempLeft + tempRight >= 2:
+                    pieceUp += tempLeft + tempRight
+
+                if tempUp == 2:
+                    pieceUp += tempUp
+
+            # Swap down
+            if x + 1 < dBound and canSwap(board, x, y, x + 1, y):
+                tempRight = 0
+                tempDown = 0
+                tempLeft = 0
+
+                for i in range(x + 2, dBound):
+                    if board[x][y] == board[i][y]:
+                        tempDown += 1
+                    else:
+                        break
+
+                for i in range(y+1, rBound):
+                    if board[x][y] == board[x+1][i]:
+                        tempRight += 1
+                    else:
+                        break
+
+                for j in range(y - 1, lBound, -1):
+                    if board[x][y] == board[x+1][j]:
+                        tempLeft += 1
+                    else:
+                        break
+
+                if tempLeft + tempRight >= 2:
+                    pieceDown += tempLeft + tempRight
+
+                if tempDown == 2:
+                    pieceDown += tempDown
+
     return -1, -1, -1, -1
 
 def countBoard(board):
