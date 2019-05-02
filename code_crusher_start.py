@@ -217,11 +217,30 @@ def hint(board):
              column of the second piece involved in the swap.  If no swap
              is possible then -1, -1, -1, -1 is returned.
     """
+    uBound = 0
+    dBound = len(board)
+    lBound = 0
+    rBound = len(board[0])
+
     # module to provide a hint to the player (is it already on the game board?)
-    for x in range(len(board)):  # TODO: Complete this code after Mark finishes canSwap
-        for y in range(len(board[0])):
-            pass
-            # if y == 0 and x == 0:
+    for x in range(len(board) - 1, 0, -1):  # TODO: Complete this code after Mark finishes canSwap
+        for y in range(len(board[0]) - 1, 0, -1):
+            # print(x, y, board[x][y])
+            if y - 1 >= lBound:
+                if canSwap(board, x, y, x, y - 1):
+                    print("Can Swap: Left Adjacent")
+
+            if y + 1 < rBound:
+                if canSwap(board, x, y, x, y + 1):
+                    print("Can Swap: Right Adjacent")
+
+            if x - 1 >= uBound:
+                if canSwap(board, x, y, x - 1, y):
+                    print("Can Swap: Upper Adjacent")
+
+            if x + 1 < dBound:
+                if canSwap(board, x, y, x + 1, y):
+                    print("Can Swap: Lower Adjacent")
 
     return -1, -1, -1, -1
 
