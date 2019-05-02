@@ -398,7 +398,7 @@ def countBoard(board):
             # its count in the dictionary is incremented
             if board[x][y] == 0:
                 pieceCnts[0] = pieceCnts.get(0, 0) + 1
-            elif  board[x][y] == 1:
+            elif board[x][y] == 1:
                 pieceCnts[1] = pieceCnts.get(1, 0) + 1
             elif board[x][y] == 2:
                 pieceCnts[2] = pieceCnts.get(2, 0) + 1
