@@ -225,10 +225,43 @@ def hint(board):
     # module to provide a hint to the player (is it already on the game board?)
     for x in range(len(board) - 1, 0, -1):  # TODO: Complete this code after Mark finishes canSwap
         for y in range(len(board[0]) - 1, 0, -1):
-            # print(x, y, board[x][y])
-            if y - 1 >= lBound:
-                if canSwap(board, x, y, x, y - 1):
-                    print("Can Swap: Left Adjacent")
+            # If a bomb is encountered on the board, pick the best swap available
+            if board[x][y] == 6:
+                # Obtaining a dictionary of the number of all pieces on the board
+                pieces = countBoard(board)
+                lPiece = 0
+                rPiece = 0
+                uPiece = 0
+                dPiece = 0
+
+                # Picks the piece with the greatest count and return it
+                if y - 1 >= lBound:
+                    lPiece = pieces.get(board[x][y-1], 0)
+                if y + 1 < rBound:
+                    rPiece = pieces.get(board[x][y+1])
+                if x - 1 >= uBound:
+                    uPiece = pieces.get(board[x-1][y])
+                if x + 1 < dBound:
+                    dPiece = pieces.get(board[x+1][y])
+
+                if lPiece >= rPiece and dPiece and uPiece:
+                    return x, y, x, y-1
+                elif rPiece >= lPiece and dPiece and uPiece:
+                    return x, y, x, y+1
+                elif dPiece >= uPiece and lPiece and rPiece:
+                    return x, y, x-1, y
+                elif uPiece >= dPiece and lPiece and rPiece:
+                    return x, y, x+1, y
+
+            pieceLeft = 0
+            pieceRight = 0
+            pieceUp = 0
+            pieceDown = 0
+            swaps = {}
+
+            # Swapping Left
+            if y - 1 >= lBound and canSwap(board, x, y, x, y - 1):
+                    for
 
             if y + 1 < rBound:
                 if canSwap(board, x, y, x, y + 1):
@@ -241,8 +274,38 @@ def hint(board):
             if x + 1 < dBound:
                 if canSwap(board, x, y, x + 1, y):
                     print("Can Swap: Lower Adjacent")
-
     return -1, -1, -1, -1
+
+def countBoard(board):
+    """
+    Method name: countBoard()
+    Description: Counts the value of all pieces on the board.
+    :param board: The current state of the game board
+    :return: pieceCnts - a dictionary of all pieces counted
+    """
+    # Each key value with its respective piece type:
+    # 0 - "print"; 1 - "if"; 2 - "while"; 3 - "for"; 4 - "def"; 5 - "list"
+    pieceCnts = {0:0, 1:0, 2:0, 3:0, 4:0, 5:0}
+    for x in range(len(board)):
+        for y in range(len(board[0])):
+            # If the value of the piece we are looking at is a regular piece,
+            # its count in the dictionary is incremented
+            if board[x][y] == 0:
+                pieceCnts[0] = pieceCnts.get(0, 0) + 1
+            elif  board[x][y] == 1:
+                pieceCnts[1] = pieceCnts.get(1, 0) + 1
+            elif board[x][y] == 2:
+                pieceCnts[2] = pieceCnts.get(2, 0) + 1
+            elif board[x][y] == 3:
+                pieceCnts[3] = pieceCnts.get(3, 0) + 1
+            elif board[x][y] == 4:
+                pieceCnts[4] = pieceCnts.get(4, 0) + 1
+            elif board[x][y] == 5:
+                pieceCnts[5] = pieceCnts.get(5, 0) + 1
+
+    return pieceCnts
+
+
 
 
 ##############################################################################
