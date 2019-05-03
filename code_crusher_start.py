@@ -2082,20 +2082,20 @@ def play(target_score, turns_left, num_rows, num_cols, num_syms, bg, cc_m, image
             else:
                 asyncAnim.append(("hint", r1, c1, r2, c2, time()))
 
+        # We decided we wished to let the players reset the game when ever they wish
+        # We also added functionality so if the user were to reset they would have their
+        # score set to zero and the turn counter returned the the set amount for there selected difficulty
         if (('r' in keys) or ('R' in keys)) and \
-                (hint(board) == (-1, -1, -1, -1)) and \
                 len(syncAnim) == 0:
             for r in range(len(board)):
                 for c in range(len(board[r])):
                     board[r][c] = EMPTY
-            # TODO: Reset not functioning properly
             # Functionality added to reset score and remaining turns when the board has been reset
             score = 0
             # Setting score to 0 resets the running score to 0. This allows us to let the player
             # reset the board and the score along with it. We feel that it is justified as the player
             # has the ability to reset the board at any point
             turns_left = localTurns
-            print("Reset")
             # Resetting the turn_left to a new local variable localTurns lets the player completely restart
             # the board fairly. Without this, the player resets the board and score and will have to play
             # with the their previously remaining turns.
