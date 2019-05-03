@@ -217,30 +217,43 @@ def hint(board):
              column of the second piece involved in the swap.  If no swap
              is possible then -1, -1, -1, -1 is returned.
     """
-    # TODO: Remove debug statements
-    # TODO: Comment EVERYTHING (Mark and Ian will know how
+
+    # These  four variables track the bounds of the board
     uBound = 0
     dBound = len(board)
     lBound = 0
     rBound = len(board[0])
 
+    # maxValue will hold the position and weight of the current best swap
+    # The best swap will remove the most amount of pieces and is the furthest down the board
     maxValue = {"pos": [-1, -1, -1, -1], "value": 0}
+
+    # tempValue holds the position and weight of the best swap of the piece currently being observed
     tempValue = {"pos": [-1, -1, -1, -1], "value": 0}
 
-    # module to provide a hint to the player (is it already on the game board?)
+    # Outer for-loops to loop through all pieces on the board, starting from the bottom right,
+    # then moving left down each row, then looping to the far right of the next row,
+    # until the top left of the board is reached. The limits had to be set to -1 in order for 0
+    # to be included in the loop iterations
     for x in range(len(board) - 1, -1, -1):
         for y in range(len(board[0]) - 1, -1, -1):
-            # If a bomb is encountered on the board, pick the best swap available
 
+            # A bomb is, by default, the best move available.
+            # If a bomb is encountered on the board, it must remove the most amount of pieces possible.
             if board[x][y] == 6:
-                # Obtaining a dictionary of the number of all pieces on the board
+
+                # countBoard returns a dictionary of all piece value counts
                 pieces = countBoard(board)
+
+                # These variables hold the weight of the possible swaps in all cardinal directions
                 lPiece = 0
                 rPiece = 0
                 uPiece = 0
                 dPiece = 0
 
-                # Picks the piece with the greatest count and return it
+                # All pieces considered must be within the bounds of the board.
+                # The respective variables will be assigned the value of how many
+                # pieces with its same value exist in the dictionary of counted pieces
                 if y - 1 >= lBound:
                     lPiece = pieces.get(board[x][y-1], 0)
                 if y + 1 < rBound:
@@ -250,6 +263,9 @@ def hint(board):
                 if x + 1 < dBound:
                     dPiece = pieces.get(board[x+1][y])
 
+                # The piece with the highest count adjacent to the bomb is chosen.
+                # The prioritization for pieces with the same size are as follows:
+                # leftPiece <-- rightPiece <-- downwardsPiece <-- upperPiece
                 if lPiece >= rPiece and lPiece >= dPiece and lPiece >= uPiece:
                     return x, y, x, y-1
                 elif rPiece >= lPiece and rPiece >= dPiece and rPiece >= uPiece:
@@ -259,141 +275,255 @@ def hint(board):
                 elif uPiece >= dPiece and uPiece >= lPiece and uPiece >= rPiece:
                     return x, y, x-1, y
 
+            # If a bomb is not found, then all possible pieces adjacent to the
+            # current piece are analyzed to determine the best possible move
+            # out of all pieces on the board.
+
+            # These values will hold the weight of the best swap for the current
+            # piece
             pieceLeft = 0
             pieceRight = 0
             pieceUp = 0
             pieceDown = 0
 
+            # --------------------------------------------------------
             # Swapping Left
-            # Checks if piece immediately
+            # --------------------------------------------------------
+
+            # Checks if piece immediately left is within bounds
             if y - 1 >= lBound and canSwap(board, x, y, x, y - 1):
+
+                # Counts how many consecutive pieces in each cardinal direction of the proposed spot
+                # that have the same type as the suggested piece
                 tempUp = 0
                 tempDown = 0
                 tempLeft = 0
 
+                # For all pieces above the proposed spot:
                 for i in range(x - 1, uBound - 1, -1):
+                    # If the pieces are consecutive and share the same value as
+                    # the suggested piece, add one to tempUp
+                    # Otherwise, break out of this loop.
                     if board[x][y] == board[i][y-1]:
                         tempUp += 1
                     else:
                         break
 
+                # For all pieces below the proposed spot:
                 for i in range(x + 1, dBound):
+                    # If the pieces are consecutive and share the same value as
+                    # the suggested piece, add one to tempDown
+                    # Otherwise, break out of this loop
                     if board[x][y] == board[i][y-1]:
                         tempDown += 1
                     else:
                         break
 
+                # For all pieces left of the proposed spot:
                 for j in range(y - 2, lBound - 1, -1):
+                    # If the pieces are consecutive and share the same value as
+                    # the suggested piece, add one to tempLeft
+                    # Otherwise, break out of this loop
                     if board[x][y] == board[x][j]:
                         tempLeft += 1
                     else:
                         break
 
+                # --------------------------------------
+                # Determining weight of a swap
+                # --------------------------------------
+
+                # If the two opposing sides are at least a combined length of 2, then
+                # the weight of pieceLeft is increased by their value
                 if tempUp + tempDown >= 2:
                     pieceLeft += tempUp + tempDown
 
+                # If the standalone side has a length of 2, then the weight of
+                # pieceLeft is increased by 2.
                 if tempLeft == 2:
                     pieceLeft += tempLeft
-            
-            # Swap right
+
+            # --------------------------------------------------------
+            # Swapping right
+            # --------------------------------------------------------
+
+            # Checks if piece immediately right is within bounds
             if y + 1 < rBound and canSwap(board, x, y, x, y + 1):
+
+                # Counts how many consecutive pieces in each cardinal direction of the proposed spot
+                # that have the same type as the suggested piece
                 tempUp = 0
                 tempDown = 0
                 tempRight = 0
 
-                # Counting matching pieces above proposed position
+                # For all pieces above the proposed spot:
                 for i in range(x - 1, uBound - 1, -1):
+                    # If the pieces are consecutive and share the same value as
+                    # the suggested piece, add one to tempUp
+                    # Otherwise, break out of this loop
                     if board[x][y] == board[i][y + 1]:
                         tempUp += 1
                     else:
                         break
 
-                # Counting matching pieces below proposed position
+                # For all pieces below the proposed spot:
                 for i in range(x + 1, dBound):
+                    # If the pieces are consecutive and share the same value as
+                    # the suggested piece, add one to tempDown
+                    # Otherwise, break out of this loop
                     if board[x][y] == board[i][y + 1]:
                         tempDown += 1
                     else:
                         break
 
-                # Counting matching pieces to the right of the proposed position
+                # For all pieces right of the proposed spot:
                 for j in range(y + 2, rBound):
+                    # If the pieces are consecutive and share the same value as
+                    # the suggested piece, add one to tempRight
+                    # Otherwise, break out of this loop
                     if board[x][y] == board[x][j]:
                         tempRight += 1
                     else:
                         break
 
-                #  --- Combining the total pieces removed in the swap ---
-                # If opposing sides have a combined total greater than or equal two
-                # (The least amount of pieces needed to make a match), add their values
+                # --------------------------------------
+                # Determining weight of a swap
+                # --------------------------------------
+
+                # If the two opposing sides are at least a combined length of 2, then
+                # the weight of pieceRight is increased by their value
                 if (tempUp + tempDown) >= 2:
                     pieceRight += (tempUp + tempDown)
 
-                # If the standalone side has 2 pieces matching (Three would already be gone,
-                # whilst 1 is too little) Add its piece amount
+                # If the standalone side has a length of 2, then the weight of
+                # pieceRight is increased by 2.
                 if tempRight == 2:
                     pieceRight += tempRight
-            
-            # Swap up
+
+            # --------------------------------------------------------
+            # Swapping up
+            # --------------------------------------------------------
+
+            #  Checks if  piece immediately up is within bounds
             if x - 1 >= uBound and canSwap(board, x, y, x - 1, y):
+
+                # Counts how many consecutive pieces in each cardinal direction of the proposed spot
+                # that have the same type as the suggested piece
                 tempUp = 0
                 tempRight = 0
                 tempLeft = 0
 
+                # For all pieces above the proposed spot:
                 for i in range(x - 2, uBound - 1):
+                    # If the pieces are consecutive and share the same value as
+                    # the suggested piece, add one to tempUp
+                    # Otherwise, break out of this loop
                     if board[x][y] == board[i][y]:
                         tempUp += 1
                     else:
                         break
 
+                # For all pieces right of the proposed spot:
                 for i in range(y + 1, rBound):
+                    # If the pieces are consecutive and share the same value as
+                    # the suggested piece, add one to tempRight
+                    # Otherwise, break out of this loop
                     if board[x][y] == board[x-1][i]:
                         tempRight += 1
                     else:
                         break
 
+                # For all pieces left of the proposed spot
                 for j in range(y - 1, lBound - 1, -1):
+                    # If the pieces are consecutive and share the same value as
+                    # the suggested piece, add one to tempLeft
+                    # Otherwise, break out of this loop
                     if board[x][y] == board[x-1][j]:
                         tempLeft += 1
                     else:
                         break
 
+                # --------------------------------------
+                # Determining weight of a swap
+                # --------------------------------------
+
+                # If the two opposing sides are at least a combined length of 2, then
+                # the weight of pieceLeft is increased by their value
                 if (tempLeft + tempRight) >= 2:
                     pieceUp += (tempLeft + tempRight)
 
+                # If the standalone side has a length of 2, then the weight of
+                # pieceLeft is increased by 2.
                 if tempUp == 2:
                     pieceUp += tempUp
 
+            # --------------------------------------------------------
             # Swap down
+            # --------------------------------------------------------
+
+            # Checks if piece immediately down is within bounds
             if x + 1 < dBound and canSwap(board, x, y, x + 1, y):
+
+                # Counts how many consecutive pieces in each cardinal direction of the proposed spot
+                # that have the same type as the suggested piece
                 tempRight = 0
                 tempDown = 0
                 tempLeft = 0
 
+                # For all pieces below proposed spot:
                 for i in range(x + 2, dBound):
+                    # If the pieces are consecutive and share the same value as
+                    # the suggested piece, add one to tempDown
+                    # Otherwise, break out of this loop
                     if board[x][y] == board[i][y]:
                         tempDown += 1
                     else:
                         break
 
+                # For all pieces right of proposed spot:
                 for i in range(y+1, rBound):
+                    # If the pieces are consecutive and share the same value as
+                    # the suggested piece, add one to tempRight
+                    # Otherwise, break out of this loop
                     if board[x][y] == board[x+1][i]:
                         tempRight += 1
                     else:
                         break
 
+                # For all pieces left of proposed spot:
                 for j in range(y - 1, lBound - 1, -1):
+                    # If the pieces are consecutive and share the same value as
+                    # the suggested piece, add one to tempLeft
+                    # Otherwise, break out of this loop
                     if board[x][y] == board[x+1][j]:
                         tempLeft += 1
                     else:
                         break
 
+                # --------------------------------------
+                # Determining weight of a swap
+                # --------------------------------------
+
+                # If the two opposing sides are at least a combined length of 2, then
+                # the weight of pieceLeft is increased by their value
                 if tempLeft + tempRight >= 2:
                     pieceDown += tempLeft + tempRight
 
+                # If the standalone side has a length of 2, then the weight of
+                # pieceLeft is increased by 2.
                 if tempDown == 2:
                     pieceDown += tempDown
 
-            # Determine which swap is best for a certain piece
+            # ---------------------------------------------------------------
+            # Determining the best swap for a piece
+            # ---------------------------------------------------------------
+
+            # If - elif tree determines which swap case will be the best for a given piece.
+            # This is determined based on how many pieces a given swap will remove. The prioritization
+            # of assigning the greatest swap is:
+            # pieceLeft <-- pieceRight <-- pieceUp <-- pieceDown
+            # When the best swap is found, update tempValue to store the positions
+            # if the two pieces to swap and the weight of the swap
             if pieceLeft >= pieceRight and pieceLeft >= pieceUp and pieceLeft >= pieceDown:
                 tempValue["pos"] = [x, y, x, y - 1]
                 tempValue["value"] = pieceLeft
@@ -407,9 +537,17 @@ def hint(board):
                 tempValue["pos"] = [x, y, x + 1, y]
                 tempValue["value"] = pieceDown
 
+            # ---------------------------------------------------------------------------------
+            # Determining if a swap is the best on the board
+            # ---------------------------------------------------------------------------------
+
+            # If the weight of the current best swap for a position is greater than the weight of
+            # the best spot currently saved for the board, update maxValue to contain the value
+            # of tempValue. The game prioritizes move found towards bottom of the board.
             if maxValue.get("value", 0) < tempValue.get("value", 0):
                 maxValue.update(tempValue)
 
+    # Returns the tuple of the position of the pieces to swap
     return tuple(maxValue.get("pos"))
 
 
