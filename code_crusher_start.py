@@ -221,7 +221,7 @@ def hint(board):
     # TODO: Not returning best  value
     # TODO: Uncomment bomb  statements
     # TODO: Remove debug statements
-    # TODO: Comment EVERYTHING (Mark and Ian will know how)
+    # TODO: Comment EVERYTHING (Mark and Ian will know how
     uBound = 0
     dBound = len(board)
     lBound = 0
@@ -231,8 +231,8 @@ def hint(board):
     tempValue = {"pos": [-1, -1, -1, -1], "value": 0}
 
     # module to provide a hint to the player (is it already on the game board?)
-    for x in range(len(board) - 1, 0, -1):
-        for y in range(len(board[0]) - 1, 0, -1):
+    for x in range(len(board) - 1, -1, -1):
+        for y in range(len(board[0]) - 1, -1, -1):
             # If a bomb is encountered on the board, pick the best swap available
             """
             if board[x][y] == 6:
@@ -268,6 +268,7 @@ def hint(board):
             pieceDown = 0
 
             # Swapping Left
+            # Checks if piece immediately
             if y - 1 >= lBound and canSwap(board, x, y, x, y - 1):
                 tempUp = 0
                 tempDown = 0
@@ -296,50 +297,58 @@ def hint(board):
 
                 if tempLeft == 2:
                     pieceLeft += tempLeft
-
+            
             # Swap right
             if y + 1 < rBound and canSwap(board, x, y, x, y + 1):
                 tempUp = 0
                 tempDown = 0
                 tempRight = 0
 
-                for i in range(x - 1, uBound, -1):
-                    if board[x][y] == board[i][y - 1]:
+                # Counting matching pieces above proposed position
+                for i in range(x - 1, uBound - 1, -1):
+                    if board[x][y] == board[i][y + 1]:
                         tempUp += 1
                     else:
                         break
 
+                # Counting matching pieces below proposed position
                 for i in range(x + 1, dBound):
-                    if board[x][y] == board[i][y - 1]:
+                    if board[x][y] == board[i][y + 1]:
                         tempDown += 1
                     else:
                         break
 
+                # Counting matching pieces to the right of the proposed position
                 for j in range(y + 2, rBound - 1):
                     if board[x][y] == board[x][j]:
                         tempRight += 1
                     else:
                         break
 
-                if tempUp + tempDown >= 2:
-                    pieceRight += tempUp + tempDown
+                #  --- Combining the total pieces removed in the swap ---
+                # If opposing sides have a combined total greater than or equal two
+                # (The least amount of pieces needed to make a match), add their values
+                if (tempUp + tempDown) >= 2:
+                    pieceRight += (tempUp + tempDown)
 
+                # If the standalone side has 2 pieces matching (Three would already be gone,
+                # whilst 1 is too little) Add its piece amount
                 if tempRight == 2:
                     pieceRight += tempRight
-
+            
             # Swap up
             if x - 1 >= uBound and canSwap(board, x, y, x - 1, y):
                 tempUp = 0
                 tempRight = 0
                 tempLeft = 0
 
-                for i in range(x + 2, lBound - 1):
+                for i in range(x - 2, uBound - 1):
                     if board[x][y] == board[i][y]:
                         tempUp += 1
                     else:
                         break
 
-                for i in range(y + 1, dBound):
+                for i in range(y + 1, rBound):
                     if board[x][y] == board[x-1][i]:
                         tempRight += 1
                     else:
@@ -351,8 +360,8 @@ def hint(board):
                     else:
                         break
 
-                if tempLeft + tempRight >= 2:
-                    pieceUp += tempLeft + tempRight
+                if (tempLeft + tempRight) >= 2:
+                    pieceUp += (tempLeft + tempRight)
 
                 if tempUp == 2:
                     pieceUp += tempUp
@@ -369,7 +378,7 @@ def hint(board):
                     else:
                         break
 
-                for i in range(y+1, rBound - 1):
+                for i in range(y+1, rBound):
                     if board[x][y] == board[x+1][i]:
                         tempRight += 1
                     else:
@@ -394,7 +403,7 @@ def hint(board):
                 tempValue["value"] = pieceLeft
                 print(tempValue, x, y, pieceLeft)
             elif pieceRight >= pieceLeft and pieceRight >= pieceUp and pieceRight >= pieceDown:
-                tempValue["pos"] = [x, y, x, y+1]
+                tempValue["pos"] = [x, y, x, y + 1]
                 tempValue["value"] = pieceRight
                 print(tempValue, x, y, pieceLeft)
             elif pieceUp >= pieceLeft and pieceUp >= pieceRight and pieceUp >= pieceDown:
@@ -406,9 +415,15 @@ def hint(board):
                 tempValue["value"] = pieceDown
                 print(tempValue, x, y, pieceLeft)
 
+            print('\033[93m' + "Max value is currently at: ", end='')
+            print(maxValue)
+
+            print('\033[92m' + "\nTemp value is currently at: ", end='')
+            print(tempValue)
             if maxValue.get("value", 0) < tempValue.get("value", 0):
                 maxValue.update(tempValue)
 
+    print("\033[94m" + "Max value is now: ", end='')
     print(maxValue)
 
     return maxValue.get("pos")
@@ -1949,12 +1964,14 @@ def play(target_score, turns_left, num_rows, num_cols, num_syms, bg, cc_m, image
             for r in range(len(board)):
                 for c in range(len(board[r])):
                     board[r][c] = EMPTY
+            # TODO: Reset not functioning properly
             # Functionality added to reset score and remaining turns when the board has been reset
             score = 0
             # Setting score to 0 resets the running score to 0. This allows us to let the player
             # reset the board and the score along with it. We feel that it is justified as the player
             # has the ability to reset the board at any point
             turns_left = localTurns
+            print("Reset")
             # Resetting the turn_left to a new local variable localTurns lets the player completely restart
             # the board fairly. Without this, the player resets the board and score and will have to play
             # with the their previously remaining turns.
@@ -2111,7 +2128,8 @@ def main():
         if selected != "" and leftButtonPressed():
             break
 
-    target_score = 5000
+    # target_score = 5000
+    target_score = 1000000
     max_turns = 35
     rows = 8
     cols = 8
