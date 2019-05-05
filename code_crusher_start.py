@@ -240,6 +240,7 @@ def hint(board):
 
             # A bomb is, by default, the best move available.
             # If a bomb is encountered on the board, it must remove the most amount of pieces possible.
+
             if board[x][y] == 6:
 
                 # countBoard returns a dictionary of all piece value counts
@@ -299,36 +300,44 @@ def hint(board):
                 tempDown = 0
                 tempLeft = 0
 
+                # Allows / Disallows a piece to be added in the for loops
+                allowPiece = True
 
                 # For all pieces above the proposed spot:
                 for i in range(x - 1, uBound - 1, -1):
                     # If the pieces are consecutive and share the same value as
                     # the suggested piece, add one to tempUp
-                    # Otherwise, break out of this loop.
-                    if board[x][y] == board[i][y-1]:
+                    # Otherwise, do not allow any pieces to be counted.
+                    if board[x][y] == board[i][y-1] and allowPiece:
                         tempUp += 1
                     else:
-                        i = uBound - 1
+                        allowPiece = False
+
+                # Resets the test
+                allowPiece = True
 
                 # For all pieces below the proposed spot:
                 for i in range(x + 1, dBound):
                     # If the pieces are consecutive and share the same value as
                     # the suggested piece, add one to tempDown
-                    # Otherwise, break out of this loop
-                    if board[x][y] == board[i][y-1]:
+                    # Otherwise, do not allow any pieces to be counted.
+                    if board[x][y] == board[i][y-1] and allowPiece:
                         tempDown += 1
                     else:
-                        i = dBound
+                        allowPiece = False
+
+                # Resets the test
+                allowPiece = True
 
                 # For all pieces left of the proposed spot:
                 for j in range(y - 2, lBound - 1, -1):
                     # If the pieces are consecutive and share the same value as
                     # the suggested piece, add one to tempLeft
-                    # Otherwise, break out of this loop
-                    if board[x][y] == board[x][j]:
+                    # Otherwise, do not allow any pieces to be counted.
+                    if board[x][y] == board[x][j] and allowPiece:
                         tempLeft += 1
                     else:
-                        i = lBound - 1
+                        allowPiece = False
 
                 # --------------------------------------
                 # Determining weight of a swap
@@ -357,35 +366,44 @@ def hint(board):
                 tempDown = 0
                 tempRight = 0
 
+                # Allows / Disallows a piece to be added in the for loops.
+                allowPiece = True
+
                 # For all pieces above the proposed spot:
                 for i in range(x - 1, uBound - 1, -1):
                     # If the pieces are consecutive and share the same value as
                     # the suggested piece, add one to tempUp
-                    # Otherwise, break out of this loop
-                    if board[x][y] == board[i][y + 1]:
+                    # Otherwise, do not allow any pieces to be counted.
+                    if board[x][y] == board[i][y + 1] and allowPiece:
                         tempUp += 1
                     else:
-                        i = uBound - 1
+                        allowPiece = False
+
+                # Resets the test
+                allowPiece = True
 
                 # For all pieces below the proposed spot:
                 for i in range(x + 1, dBound):
                     # If the pieces are consecutive and share the same value as
                     # the suggested piece, add one to tempDown
-                    # Otherwise, break out of this loop
-                    if board[x][y] == board[i][y + 1]:
+                    # Otherwise, do not allow any pieces to be counted.
+                    if board[x][y] == board[i][y + 1] and allowPiece:
                         tempDown += 1
                     else:
-                        i = dBound
+                        allowPiece = False
+
+                # Resets the test
+                allowPiece = True
 
                 # For all pieces right of the proposed spot:
                 for i in range(y + 2, rBound):
                     # If the pieces are consecutive and share the same value as
                     # the suggested piece, add one to tempRight
-                    # Otherwise, break out of this loop
-                    if board[x][y] == board[x][i]:
+                    # Otherwise, do not allow any pieces to be counted.
+                    if board[x][y] == board[x][i] and allowPiece:
                         tempRight += 1
                     else:
-                        i = rBound
+                        allowPiece = False
 
                 # --------------------------------------
                 # Determining weight of a swap
@@ -414,35 +432,44 @@ def hint(board):
                 tempRight = 0
                 tempLeft = 0
 
+                # Allows / Disallows a piece to be added in the for loops.
+                allowPiece = True
+
                 # For all pieces above the proposed spot:
                 for i in range(x - 2, uBound - 1):
                     # If the pieces are consecutive and share the same value as
                     # the suggested piece, add one to tempUp
-                    # Otherwise, break out of this loop
-                    if board[x][y] == board[i][y]:
+                    # Otherwise, do not allow any pieces to be added
+                    if board[x][y] == board[i][y] and allowPiece:
                         tempUp += 1
                     else:
-                        i = uBound - 1
+                        allowPiece = False
+
+                # Resets the test
+                allowPiece = True
 
                 # For all pieces right of the proposed spot:
                 for i in range(y + 1, rBound):
                     # If the pieces are consecutive and share the same value as
                     # the suggested piece, add one to tempRight
-                    # Otherwise, break out of this loop
-                    if board[x][y] == board[x-1][i]:
+                    # Otherwise, do not allow any pieces to be added.
+                    if board[x][y] == board[x-1][i] and allowPiece:
                         tempRight += 1
                     else:
-                        i = rBound
+                        allowPiece = False
+
+                # Resets the test
+                allowPiece = True
 
                 # For all pieces left of the proposed spot
                 for i in range(y - 1, lBound - 1, -1):
                     # If the pieces are consecutive and share the same value as
                     # the suggested piece, add one to tempLeft
-                    # Otherwise, break out of this loop
-                    if board[x][y] == board[x-1][i]:
+                    # Otherwise, do not allow any pieces to be added.
+                    if board[x][y] == board[x-1][i] and allowPiece:
                         tempLeft += 1
                     else:
-                        i = lBound - 1
+                        allowPiece = False
 
                 # --------------------------------------
                 # Determining weight of a swap
@@ -459,7 +486,7 @@ def hint(board):
                     pieceUp += tempUp
 
             # --------------------------------------------------------
-            # Swap down
+            # Swapping down
             # --------------------------------------------------------
 
             # Checks if piece immediately down is within bounds
@@ -471,36 +498,44 @@ def hint(board):
                 tempDown = 0
                 tempLeft = 0
 
+                # Allows / Disallows a piece to be added in the for loops.
+                allowPiece = True
+
                 # For all pieces below proposed spot:
                 for i in range(x + 2, dBound):
                     # If the pieces are consecutive and share the same value as
                     # the suggested piece, add one to tempDown
-                    # Otherwise, break out of this loop
-                    if board[x][y] == board[i][y]:
+                    # Otherwise, do not allow any pieces to be added.
+                    if board[x][y] == board[i][y] and allowPiece:
                         tempDown += 1
                     else:
-                        i = dBound
+                        allowPiece = False
 
+                # Resets the test
+                allowPiece = True
 
                 # For all pieces right of proposed spot:
                 for i in range(y+1, rBound):
                     # If the pieces are consecutive and share the same value as
                     # the suggested piece, add one to tempRight
-                    # Otherwise, break out of this loop
-                    if board[x][y] == board[x+1][i]:
+                    # Otherwise, do not allow any pieces to be added.
+                    if board[x][y] == board[x+1][i] and allowPiece:
                         tempRight += 1
                     else:
-                        i = rBound
+                        allowPiece = False
+
+                # Resets the test
+                allowPiece = True
 
                 # For all pieces left of proposed spot:
                 for i in range(y - 1, lBound - 1, -1):
                     # If the pieces are consecutive and share the same value as
                     # the suggested piece, add one to tempLeft
-                    # Otherwise, break out of this loop
-                    if board[x][y] == board[x+1][i]:
+                    # Otherwise, do not allow any pieces to be added.
+                    if board[x][y] == board[x+1][i] and allowPiece:
                         tempLeft += 1
                     else:
-                        i = lBound - 1
+                        allowPiece = False
 
                 # --------------------------------------
                 # Determining weight of a swap
@@ -582,8 +617,6 @@ def countBoard(board):
                 pieceCnts[5] = pieceCnts.get(5, 0) + 1
 
     return pieceCnts
-
-
 
 
 ##############################################################################
