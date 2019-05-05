@@ -258,11 +258,11 @@ def hint(board):
                 if y - 1 >= lBound:
                     lPiece = pieces.get(board[x][y-1], 0)
                 if y + 1 < rBound:
-                    rPiece = pieces.get(board[x][y+1])
+                    rPiece = pieces.get(board[x][y+1], 0)
                 if x - 1 >= uBound:
-                    uPiece = pieces.get(board[x-1][y])
+                    uPiece = pieces.get(board[x-1][y], 0)
                 if x + 1 < dBound:
-                    dPiece = pieces.get(board[x+1][y])
+                    dPiece = pieces.get(board[x+1][y], 0)
 
                 # The piece with the highest count adjacent to the bomb is chosen.
                 # The prioritization for pieces with the same size are as follows:
