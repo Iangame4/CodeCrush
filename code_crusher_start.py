@@ -299,6 +299,7 @@ def hint(board):
                 tempDown = 0
                 tempLeft = 0
 
+
                 # For all pieces above the proposed spot:
                 for i in range(x - 1, uBound - 1, -1):
                     # If the pieces are consecutive and share the same value as
@@ -307,7 +308,7 @@ def hint(board):
                     if board[x][y] == board[i][y-1]:
                         tempUp += 1
                     else:
-                        break
+                        i = uBound - 1
 
                 # For all pieces below the proposed spot:
                 for i in range(x + 1, dBound):
@@ -317,7 +318,7 @@ def hint(board):
                     if board[x][y] == board[i][y-1]:
                         tempDown += 1
                     else:
-                        break
+                        i = dBound
 
                 # For all pieces left of the proposed spot:
                 for j in range(y - 2, lBound - 1, -1):
@@ -327,7 +328,7 @@ def hint(board):
                     if board[x][y] == board[x][j]:
                         tempLeft += 1
                     else:
-                        break
+                        i = lBound - 1
 
                 # --------------------------------------
                 # Determining weight of a swap
@@ -364,7 +365,7 @@ def hint(board):
                     if board[x][y] == board[i][y + 1]:
                         tempUp += 1
                     else:
-                        break
+                        i = uBound - 1
 
                 # For all pieces below the proposed spot:
                 for i in range(x + 1, dBound):
@@ -374,17 +375,17 @@ def hint(board):
                     if board[x][y] == board[i][y + 1]:
                         tempDown += 1
                     else:
-                        break
+                        i = dBound
 
                 # For all pieces right of the proposed spot:
-                for j in range(y + 2, rBound):
+                for i in range(y + 2, rBound):
                     # If the pieces are consecutive and share the same value as
                     # the suggested piece, add one to tempRight
                     # Otherwise, break out of this loop
-                    if board[x][y] == board[x][j]:
+                    if board[x][y] == board[x][i]:
                         tempRight += 1
                     else:
-                        break
+                        i = rBound
 
                 # --------------------------------------
                 # Determining weight of a swap
@@ -421,7 +422,7 @@ def hint(board):
                     if board[x][y] == board[i][y]:
                         tempUp += 1
                     else:
-                        break
+                        i = uBound - 1
 
                 # For all pieces right of the proposed spot:
                 for i in range(y + 1, rBound):
@@ -431,17 +432,17 @@ def hint(board):
                     if board[x][y] == board[x-1][i]:
                         tempRight += 1
                     else:
-                        break
+                        i = rBound
 
                 # For all pieces left of the proposed spot
-                for j in range(y - 1, lBound - 1, -1):
+                for i in range(y - 1, lBound - 1, -1):
                     # If the pieces are consecutive and share the same value as
                     # the suggested piece, add one to tempLeft
                     # Otherwise, break out of this loop
-                    if board[x][y] == board[x-1][j]:
+                    if board[x][y] == board[x-1][i]:
                         tempLeft += 1
                     else:
-                        break
+                        i = lBound - 1
 
                 # --------------------------------------
                 # Determining weight of a swap
@@ -478,7 +479,8 @@ def hint(board):
                     if board[x][y] == board[i][y]:
                         tempDown += 1
                     else:
-                        break
+                        i = dBound
+
 
                 # For all pieces right of proposed spot:
                 for i in range(y+1, rBound):
@@ -488,17 +490,17 @@ def hint(board):
                     if board[x][y] == board[x+1][i]:
                         tempRight += 1
                     else:
-                        break
+                        i = rBound
 
                 # For all pieces left of proposed spot:
-                for j in range(y - 1, lBound - 1, -1):
+                for i in range(y - 1, lBound - 1, -1):
                     # If the pieces are consecutive and share the same value as
                     # the suggested piece, add one to tempLeft
                     # Otherwise, break out of this loop
-                    if board[x][y] == board[x+1][j]:
+                    if board[x][y] == board[x+1][i]:
                         tempLeft += 1
                     else:
-                        break
+                        i = lBound - 1
 
                 # --------------------------------------
                 # Determining weight of a swap
