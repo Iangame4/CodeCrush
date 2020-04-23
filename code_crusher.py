@@ -1,5 +1,5 @@
 ###############################################################################
-#  File: code_crusher_start.py
+#  File: code_crusher.py
 #
 #  Author(s): Dr. Grasser, Anto Ivicevic, David Dunnigan, Ian Pike, Mark Dacar, Nina Bacon
 #  Description:
@@ -11,9 +11,6 @@
 #               SimpleGraphics.py - Copyright (C) 2013, 2014, 2015, 2017 Ben Stephenson
 ###############################################################################
 
-#
-#  The location to insert your code is clearly marked -- it begins on line 32.
-#
 from SimpleGraphics import *
 from random import randrange, shuffle
 from time import time, sleep
@@ -42,13 +39,6 @@ BURST = 6  # Power up bomb, clears the board of all pieces same to the one
 RUNNING = 0  # initiates game to running
 WIN = 1  # initiates win
 LOSE = -1  # initiates loss
-
-###############################################################################
-#
-#  Only modify the file below this point
-#
-###############################################################################
-
 
 def createBoard(iRows, iCols, iPieces):
     """
@@ -617,19 +607,6 @@ def countBoard(board):
                 pieceCnts[5] = pieceCnts.get(5, 0) + 1
 
     return pieceCnts
-
-
-##############################################################################
-#
-# Only modify code above this point in the file
-#
-##############################################################################
-
-##############################################################################
-##
-##  Code for testing the functions written by the students
-##
-##############################################################################
 
 # Determine whether or not a function exists in the namespace at the time
 # this function is called
